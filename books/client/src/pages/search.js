@@ -9,8 +9,8 @@ import { Container, Row, Col } from "../components/Grid";
 import Header from "../components/Header"
 class Search extends Component {
   state = {
-    recipes: [],
-    recipeSearch: ""
+    books: [],
+    booksearch: ""
   };
 
   handleInputChange = event => {
@@ -23,10 +23,10 @@ class Search extends Component {
   };
 
   handleFormSubmit = event => {
-    // When the form is submitted, prevent its default behavior, get recipes update the recipes state
+    // When the form is submitted, prevent its default behavior, get books update the books state
     event.preventDefault();
-    API.getBooks(this.state.recipeSearch)
-      .then(res => this.setState({ recipes: res.data }))
+    API.getBooks(this.state.booksearch)
+      .then(res => this.setState({ books: res.data }))
       .catch(err => console.log(err));
   };
 
@@ -44,8 +44,8 @@ class Search extends Component {
                   <Row>
                     <Col size="xs-9 sm-10">
                       <Input
-                        name="recipeSearch"
-                        value={this.state.recipeSearch}
+                        name="booksearch"
+                        value={this.state.booksearch}
                         onChange={this.handleInputChange}
                         placeholder="Search For a Book"
                       />
@@ -66,19 +66,23 @@ class Search extends Component {
           </Row>
           <Row>
             <Col size="xs-12">
-              {!this.state.recipes.length ? (
-                <h1 className="text-center">No Recipes to Display</h1>
+              {!this.state.books.length ? (
+                <h1 className="text-center">No Books to Display</h1>
               ) : (
                 <RecipeList>
-                  {this.state.recipes.map(recipe => {
+                  
+                  {this.state.books.map(recipe => {
+                    const titlebook = recipe.items[0].volumeInfo.title
                     return (
                       <BookListItem
+                      
                         key={recipe.title}
-                        title={recipe.title}
-                        href={recipe.href}
-                        authors={recipe.authors}
-                        image={recipe.image}
-                        description={recipe.description}
+                        title={titlebook}
+                  
+                        // infoLink={recipe.infoLink}
+                        // authors={recipe.authors}
+                        // thumbnail={recipe.thumbnail}
+                        // description={recipe.description}
                       />
                     );
                   })}
