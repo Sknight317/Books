@@ -42,6 +42,31 @@ app.get("/api/books", function(req, res) {
       });
   });
 
+//Route to save a new book to the database
+app.post("/api/books", function(req, res) {
+  db.Book.create(req.body)
+    .then(function(dbBooks) {
+      res.json(dbBooks);
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
+//Used to delete a book from mongo database by id
+app.delete("/articles/delete/:id", function (req, res) {
+  db.Book.findOneAndRemove({ _id: req.params.id })
+  .then(function (result) {
+    console.log("This article has been deleted");
+    res.json(result);
+  })
+  .catch(function (err) {
+    res.json(err);
+    console.log("Error deleting articles: " + err);
+  });
+});
+  
   // app.get('/api/hello', (req, res) => {
   //   res.send({ express: 'Hello From Express' });
   // });

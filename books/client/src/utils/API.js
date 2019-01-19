@@ -1,9 +1,9 @@
 import axios from "axios";
 
-// Export an object containing methods 
-
+// The getRecipes method retrieves recipes from the server
+// It accepts a "query" or term to search the recipe api for
 export default {
-  getBooks: function() {
-    return axios.get("https://www.googleapis.com/books/v1/volumes");
-  },
+  getBooks: function(query) {
+    return axios.get("/api/recipes", { params: { q: query } });
+  }
 };

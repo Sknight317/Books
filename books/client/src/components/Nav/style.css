@@ -5,9 +5,14 @@ nav {
   top: 0;
   height: 60px;
   color: white;
+  width: 100%;
 }
 ul {
   display: flex;
   flex-direction: row;
   list-style-type: none;
+  
+}
+li{
+  padding: 0px 10px;
 }

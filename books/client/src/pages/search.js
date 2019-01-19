@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import Jumbotron from "../components/Jumbotron";
+
 import Nav from "../components/Nav";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import API from "../utils/API";
-import { RecipeList, RecipeListItem } from "../components/RecipeList";
+import { RecipeList, BookListItem } from "../components/RecipeList";
 import { Container, Row, Col } from "../components/Grid";
 import Header from "../components/Header"
-class App extends Component {
+class Search extends Component {
   state = {
     recipes: [],
     recipeSearch: ""
@@ -35,7 +35,7 @@ class App extends Component {
       <div>
         <Nav />
         <Header />
-        <Jumbotron />
+        
         <Container>
           <Row>
             <Col size="md-12">
@@ -47,7 +47,7 @@ class App extends Component {
                         name="recipeSearch"
                         value={this.state.recipeSearch}
                         onChange={this.handleInputChange}
-                        placeholder="Search For a Recipe"
+                        placeholder="Search For a Book"
                       />
                     </Col>
                     <Col size="xs-3 sm-2">
@@ -72,12 +72,13 @@ class App extends Component {
                 <RecipeList>
                   {this.state.recipes.map(recipe => {
                     return (
-                      <RecipeListItem
+                      <BookListItem
                         key={recipe.title}
                         title={recipe.title}
                         href={recipe.href}
-                        ingredients={recipe.ingredients}
-                        thumbnail={recipe.thumbnail}
+                        authors={recipe.authors}
+                        image={recipe.image}
+                        description={recipe.description}
                       />
                     );
                   })}
@@ -91,4 +92,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Search;
