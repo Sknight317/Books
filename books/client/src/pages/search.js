@@ -4,7 +4,7 @@ import Nav from "../components/Nav";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import API from "../utils/API";
-import { RecipeList, BookListItem } from "../components/RecipeList";
+import { BookList, BookListItem } from "../components/RecipeList";
 import { Container, Row, Col } from "../components/Grid";
 import Header from "../components/Header"
 class Search extends Component {
@@ -25,8 +25,9 @@ class Search extends Component {
   handleFormSubmit = event => {
     // When the form is submitted, prevent its default behavior, get books update the books state
     event.preventDefault();
+    alert("sent")
     API.getBooks(this.state.booksearch)
-      .then(res => this.setState({ books: res.data }))
+      .then(res => this.setState({ books: this.res.data.items }))
       .catch(err => console.log(err));
   };
 
@@ -69,15 +70,15 @@ class Search extends Component {
               {!this.state.books.length ? (
                 <h1 className="text-center">No Books to Display</h1>
               ) : (
-                <RecipeList>
+                <BookList>
                   
                   {this.state.books.map(recipe => {
-                    const titlebook = recipe.items[0].volumeInfo.title
+                    
                     return (
                       <BookListItem
                       
-                        key={recipe.title}
-                        title={titlebook}
+                        key={recipe.kind}
+                        title={recipe.kind}
                   
                         // infoLink={recipe.infoLink}
                         // authors={recipe.authors}
@@ -86,8 +87,9 @@ class Search extends Component {
                       />
                     );
                   })}
-                </RecipeList>
-              )}
+                </BookList>
+              )
+              }
             </Col>
           </Row>
         </Container>
