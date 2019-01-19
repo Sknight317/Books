@@ -4,6 +4,6 @@ import axios from "axios";
 
 export default {
   getBooks: function() {
-    return axios.get("https://dog.ceo/api/breeds/image/random");
+    return axios.get("https://www.googleapis.com/books/v1/volumes");
   },
 };
