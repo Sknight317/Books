@@ -13,9 +13,9 @@ class Search extends Component {
     booksearch: ""
   };
 
-componentWillMount = () => {
-  this.findbook()
-}
+// componentWillMount = () => {
+//   this.findbook()
+// }
 
 findbook = (query) => {
   //Use axios to retrieve books from the google books api
@@ -25,6 +25,7 @@ findbook = (query) => {
     responseType:'json'
   }).then(function(response) {
     console.log(response.data);
+    // this.setState({books: response.data})
   })
 }
   handleInputChange = event => {
@@ -44,6 +45,7 @@ findbook = (query) => {
   //  API.getBooks(this.state.booksearch)
   //     .then(response => this.setState({ books: response.data.items }))
   //     .catch(err => console.log(err));
+  
   };
 
            
@@ -89,8 +91,8 @@ findbook = (query) => {
               ) : (
                 
                 <BookList>
-                {this.state.books.map(recipe => {
-                    const title = recipe.items.volumeInfo.title
+                {this.state.books.items.map(recipe => {
+                    const title = recipe.volumeInfo.title
                     console.log("title:" +title)
                     return (
                       <BookListItem
