@@ -1,18 +1,32 @@
 import React, { Component } from "react";
-
 import Nav from "../components/Nav";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import API from "../utils/API";
+// import API from "../utils/API";
 import { BookList, BookListItem } from "../components/RecipeList";
 import { Container, Row, Col } from "../components/Grid";
-import Header from "../components/Header"
+import Header from "../components/Header";
+import axios from "axios";
 class Search extends Component {
   state = {
     books: [],
     booksearch: ""
   };
 
+componentWillMount = () => {
+  this.findbook()
+}
+
+findbook = (query) => {
+  //Use axios to retrieve books from the google books api
+  axios({
+    method:'get',
+    url:'https://www.googleapis.com/books/v1/volumes?q=' + query,
+    responseType:'json'
+  }).then(function(response) {
+    console.log(response.data);
+  })
+}
   handleInputChange = event => {
     // Destructure the name and value properties off of event.target
     // Update the appropriate state
@@ -26,12 +40,15 @@ class Search extends Component {
     // When the form is submitted, prevent its default behavior, get books update the books state
     event.preventDefault();
     alert("sent")
-    API.getBooks(this.state.booksearch)
-      .then(res => this.setState({ books: this.res.data.items }))
-      .catch(err => console.log(err));
+    this.findbook(this.state.booksearch)
+  //  API.getBooks(this.state.booksearch)
+  //     .then(response => this.setState({ books: response.data.items }))
+  //     .catch(err => console.log(err));
   };
 
+           
   render() {
+    
     return (
       <div>
         <Nav />
@@ -70,15 +87,16 @@ class Search extends Component {
               {!this.state.books.length ? (
                 <h1 className="text-center">No Books to Display</h1>
               ) : (
+                
                 <BookList>
-                  
-                  {this.state.books.map(recipe => {
-                    
+                {this.state.books.map(recipe => {
+                    const title = recipe.items.volumeInfo.title
+                    console.log("title:" +title)
                     return (
                       <BookListItem
                       
-                        key={recipe.kind}
-                        title={recipe.kind}
+                        key={title}
+                        title={title}
                   
                         // infoLink={recipe.infoLink}
                         // authors={recipe.authors}
