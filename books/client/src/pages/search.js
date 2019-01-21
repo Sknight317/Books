@@ -17,17 +17,20 @@ class Search extends Component {
 //   this.findbook()
 // }
 
-findbook = (query) => {
-  //Use axios to retrieve books from the google books api
+findbook = () => {
+  // Use axios to retrieve books from the google books api
   axios({
     method:'get',
-    url:'https://www.googleapis.com/books/v1/volumes?q=' + query,
+    url:'https://www.googleapis.com/books/v1/volumes?q=' + this.state.booksearch,
     responseType:'json'
-  }).then(function(response) {
-    console.log(response.data);
-    // this.setState({books: response.data})
-  })
+  }).then((res) => {
+  //Set the state of books to res.data.items
+  //Use items because items is where the array starts; (can't map over objectS)
+    this.setState({books: res.data.items}, () => {console.log(res.data)})
+  }).catch((err) => {console.log(err)});
 }
+
+
   handleInputChange = event => {
     // Destructure the name and value properties off of event.target
     // Update the appropriate state
@@ -42,9 +45,7 @@ findbook = (query) => {
     event.preventDefault();
     alert("sent")
     this.findbook(this.state.booksearch)
-  //  API.getBooks(this.state.booksearch)
-  //     .then(response => this.setState({ books: response.data.items }))
-  //     .catch(err => console.log(err));
+    
   
   };
 
@@ -91,8 +92,8 @@ findbook = (query) => {
               ) : (
                 
                 <BookList>
-                {this.state.books.items.map(recipe => {
-                    const title = recipe.volumeInfo.title
+                {this.state.books.map(book => {
+                    const title = book.volumeInfo.title
                     console.log("title:" +title)
                     return (
                       <BookListItem
