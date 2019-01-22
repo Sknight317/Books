@@ -2,17 +2,24 @@ import React, { Component } from "react";
 import Nav from "../components/Nav";
 import Input from "../components/Input";
 import Button from "../components/Button";
-// import API from "../utils/API";
+import API from "../utils/API";
 import { BookList, BookListItem } from "../components/RecipeList";
 import { Container, Row, Col } from "../components/Grid";
 import Header from "../components/Header";
 import axios from "axios";
 import style from "./style.css"
+import SaveBtn from "../components/SaveBtn"
 
 class Search extends Component {
   state = {
     books: [],
-    booksearch: ""
+    booksearch: "",
+    title: "",
+    authors: "",
+    description: "",
+    thumbnail: "",
+    link: "",
+    saved: ""
   };
 
 // componentWillMount = () => {
@@ -32,7 +39,28 @@ findbook = () => {
   }).catch((err) => {console.log(err)});
 }
 
-
+saveNewBook = () => {
+  // API.saveBook({
+    const Book = {
+    title: this.state.title,
+    authors: this.state.authors,
+    description: this.state.description,
+    thumbnail: this.state.thumbnail,
+    link: this.state.link,
+    saved: true
+    }
+  // })
+  axios.post("api/books", Book)
+        .then(res => console.log(res.data));
+        this.setState({
+            title: '',
+            authors: '',
+            description: '',
+            thumbnail: '',
+            link: '',
+            saved: ''
+        });
+    }
   handleInputChange = event => {
     // Destructure the name and value properties off of event.target
     // Update the appropriate state
@@ -99,8 +127,8 @@ findbook = () => {
                 {this.state.books.map(book => {
                     const title = book.volumeInfo.title;
                     console.log("title:" +title);
-                    const author = book.volumeInfo.authors;
-                    console.log("author:" +author);
+                    const authors = book.volumeInfo.authors;
+                    console.log("author:" +authors);
                     const link = book.volumeInfo.infoLink;
                     console.log("link:" +link);
                     const thumbnail = book.volumeInfo.imageLinks.thumbnail;
@@ -108,16 +136,20 @@ findbook = () => {
                     const description = book.volumeInfo.description;
                     console.log("description:" +description);
                     return (
-                      <BookListItem
-                        key={title}
+                      <BookListItem key={book._id}
                         title={title}
                         infoLink={link}
-                        authors={author}
+                        authors={authors}
                         thumbnail={thumbnail}
-                        description={description}
-                      />
+                        description={description}>
+                    <button rel="noreferrer noopener" target="_blank" onClick={this.link}>
+                    View
+                    </button>
+                     <SaveBtn onClick={() => this.saveNewBook(book._id)} />   
+                      </BookListItem>
                     );
                   })}
+                  
                 </BookList>
               )
               }

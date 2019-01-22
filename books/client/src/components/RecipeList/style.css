@@ -27,4 +27,14 @@ h3 {
     padding: 10px;
     overflow: auto;
   }
+  .save {
+    background-color: black;
+    color: white;
+    padding: 5px;
+    margin-left: 10px;
+    outline: none;
+  }
+  .save:hover {
+      background-color: rgb(110, 110, 110);
+  }
   

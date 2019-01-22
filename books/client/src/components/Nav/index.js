@@ -6,8 +6,8 @@ function Nav() {
     <nav className="navbar navbar-dark bg-dark">
       <ul>
         <li><a href> Google Books</a></li>
-        <li>Search</li>
-        <li>Saved</li>
+        <li><a href="/">Search</a></li>
+        <li><a href="/api/books">Saved</a></li>
       </ul>
     </nav>
   );

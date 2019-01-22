@@ -2,15 +2,15 @@ const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 mongoose.plugin(schema => { schema.options.usePushEach = true });
-
+// const routes = require("./routes/api");
 // Requiring axios and cheerios
-var axios = require("axios");
-var cheerio = require("cheerio");
+// var axios = require("axios");
+// var cheerio = require("cheerio");
 
 // Require all models
-var db = require("./models/Book");
+const Book = require("./models/Book");
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -18,6 +18,8 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
+// Add routes, both API and view
+// app.use(routes);
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/googlebooks";
 console.log("connection url: " + MONGODB_URI)
@@ -43,35 +45,32 @@ app.get("/api/books", function(req, res) {
   });
 
 //Route to save a new book to the database
-app.post("/api/books", function(req, res) {
-  db.Book.create(req.body)
-    .then(function(dbBooks) {
-      res.json(dbBooks);
-    })
-    .catch(function(err) {
+app.post("/api/books",(req, res) => {
+  // db.Book.create(req.body)
+  const myData = new Book(req.body);
+  myData.save()
+  .then(item => {
+    res.send("item saved to database");
+  })
+    .catch(err => {
       // If an error occurred, send it to the client
       res.json(err);
     });
 });
 
 //Used to delete a book from mongo database by id
-app.delete("/articles/delete/:id", function (req, res) {
-  db.Book.findOneAndRemove({ _id: req.params.id })
-  .then(function (result) {
-    console.log("This article has been deleted");
-    res.json(result);
-  })
-  .catch(function (err) {
-    res.json(err);
-    console.log("Error deleting articles: " + err);
-  });
-});
+// app.delete("/articles/delete/:id", function (req, res) {
+//   db.Book.findOneAndRemove({ _id: req.params.id })
+//   .then(function (result) {
+//     console.log("This article has been deleted");
+//     res.json(result);
+//   })
+//   .catch(function (err) {
+//     res.json(err);
+//     console.log("Error deleting articles: " + err);
+//   });
+// });
   
-  // app.get('/api/hello', (req, res) => {
-  //   res.send({ express: 'Hello From Express' });
-  // });
-
-
 // Send every other request to the React app
 // Define any API routes before this runs
 app.get("*", (req, res) => {
