@@ -7,6 +7,8 @@ import { BookList, BookListItem } from "../components/RecipeList";
 import { Container, Row, Col } from "../components/Grid";
 import Header from "../components/Header";
 import axios from "axios";
+import style from "./style.css"
+
 class Search extends Component {
   state = {
     books: [],
@@ -63,15 +65,15 @@ findbook = () => {
               <form>
                 <Container>
                   <Row>
-                    <Col size="xs-9 sm-10">
+                    <Col >
                       <Input
                         name="booksearch"
                         value={this.state.booksearch}
                         onChange={this.handleInputChange}
                         placeholder="Search For a Book"
+                        
                       />
-                    </Col>
-                    <Col size="xs-3 sm-2">
+                    
                       <Button
                         onClick={this.handleFormSubmit}
                         type="success"
@@ -79,32 +81,40 @@ findbook = () => {
                       >
                         Search
                       </Button>
+                    
                     </Col>
+                    
                   </Row>
                 </Container>
               </form>
             </Col>
           </Row>
           <Row>
-            <Col size="xs-12">
+            <Col>
               {!this.state.books.length ? (
                 <h1 className="text-center">No Books to Display</h1>
               ) : (
                 
                 <BookList>
                 {this.state.books.map(book => {
-                    const title = book.volumeInfo.title
-                    console.log("title:" +title)
+                    const title = book.volumeInfo.title;
+                    console.log("title:" +title);
+                    const author = book.volumeInfo.authors;
+                    console.log("author:" +author);
+                    const link = book.volumeInfo.infoLink;
+                    console.log("link:" +link);
+                    const thumbnail = book.volumeInfo.imageLinks.thumbnail;
+                    console.log("thumbnail:" +thumbnail);
+                    const description = book.volumeInfo.description;
+                    console.log("description:" +description);
                     return (
                       <BookListItem
-                      
                         key={title}
                         title={title}
-                  
-                        // infoLink={recipe.infoLink}
-                        // authors={recipe.authors}
-                        // thumbnail={recipe.thumbnail}
-                        // description={recipe.description}
+                        infoLink={link}
+                        authors={author}
+                        thumbnail={thumbnail}
+                        description={description}
                       />
                     );
                   })}

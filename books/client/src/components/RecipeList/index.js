@@ -1,39 +1,41 @@
 import React from "react";
-// import Thumbnail from "../Thumbnail";
+import Thumbnail from "../Thumbnail";
 import { Container, Row, Col } from "../Grid";
-
+import "./style.css";
 // Exporting both RecipeList and RecipeListItem from this file
 
 // RecipeList renders a bootstrap list item
 export function BookList({ children }) {
-  return <ul className="list-group">{children}</ul>;
+  return <ul className="list-group list">{children}</ul>;
 }
 
-// RecipeListItem renders a bootstrap list item containing data from the recipe api call
+//  renders a bootstrap list item containing data from the recipe api call
 export function BookListItem({
   title,
   authors,
   description,
-  // thumbnail = "https://placehold.it/300x300",
-  // infoLink
+  thumbnail = "https://placehold.it/300x300",
+  infoLink
 }) {
   return (
-    <li className="list-group-item">
-      <Container>
-        <Row>
-          <Col size="xs-4 sm-2">
-            {/* <Thumbnail src={thumbnail} /> */}
-          </Col>
-          <Col size="xs-8 sm-9">
+  <li className="list-group-item">
+    <Container className="contain"> 
+      <Row>
+        <Col>
+            <Thumbnail src={thumbnail} className="thumb-img" />
+           
             <h3>{title}</h3>
-            <h2>{authors}></h2>
+            <h5>{authors}></h5>
             <p>{description}</p>
-            {/* <a rel="noreferrer noopener" target="_blank" href={infoLink}> */}
-              {/* Go to recipe!
-            </a> */}
-          </Col>
+            <a rel="noreferrer noopener" target="_blank" href={infoLink}>
+              View
+            </a>
+            
+         </Col>
         </Row>
-      </Container>
+       </Container>   
     </li>
+  
+    
   );
 }

@@ -1,0 +1,30 @@
+
+li.list-group-item {
+    background-color: rgb(231, 230, 230);
+    margin: 25px 0;
+    
+}
+.list {
+    display: block;
+    width: 900px;
+    margin: 0 auto;
+}
+
+h3 {
+    font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+}  
+.thumb-img {
+    float: left;
+    margin: 0 15px 0 0;
+    width: 200px;
+    height: 200px;
+  }
+  li p {
+    font: 200 14px/1.5 Georgia, Times New Roman, serif;
+  }
+  
+  li {
+    padding: 10px;
+    overflow: auto;
+  }
+  

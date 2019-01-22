@@ -2,9 +2,9 @@
     background-color: rgb(190, 186, 186);
     height: 200px;
     margin-top: 50px;
-    width: 90%;
+    /* width: 900px; */
     text-align: center;
-    
+    margin: 0 auto;
 }
 .form-control {
     border-radius: 3px;
