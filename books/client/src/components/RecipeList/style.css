@@ -27,7 +27,7 @@ h3 {
     padding: 10px;
     overflow: auto;
   }
-  .save {
+  /* .save {
     background-color: black;
     color: white;
     padding: 5px;
@@ -36,5 +36,5 @@ h3 {
   }
   .save:hover {
       background-color: rgb(110, 110, 110);
-  }
+  } */
   

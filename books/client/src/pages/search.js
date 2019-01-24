@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import axios from "axios";
 import style from "./style.css"
 import SaveBtn from "../components/SaveBtn"
+import ViewBtn from "../components/ViewBtn";
 
 class Search extends Component {
   state = {
@@ -39,28 +40,32 @@ findbook = () => {
   }).catch((err) => {console.log(err)});
 }
 
-saveNewBook = () => {
-  // API.saveBook({
-    const Book = {
+Submitbook = event => {
+event.preventDefault();
+alert("saved button clicked!")
+if(this.state.title) {
+  API.saveBook({
     title: this.state.title,
     authors: this.state.authors,
     description: this.state.description,
     thumbnail: this.state.thumbnail,
     link: this.state.link,
     saved: true
-    }
-  // })
-  axios.post("api/books", Book)
-        .then(res => console.log(res.data));
-        this.setState({
-            title: '',
-            authors: '',
-            description: '',
-            thumbnail: '',
-            link: '',
-            saved: ''
-        });
-    }
+  }) 
+  .then(res => {
+    console.log(res);
+    console.log(res.data);
+  })
+  .catch(err => console.log(err));
+  }  
+};
+
+  
+ 
+  
+    // .then(res => this.loadBooks())
+    
+
   handleInputChange = event => {
     // Destructure the name and value properties off of event.target
     // Update the appropriate state
@@ -73,13 +78,16 @@ saveNewBook = () => {
   handleFormSubmit = event => {
     // When the form is submitted, prevent its default behavior, get books update the books state
     event.preventDefault();
-    alert("sent")
+    // alert("sent")
     this.findbook(this.state.booksearch)
     
   
   };
-
-           
+// viewPage = () => {
+//   const url = this.state.link;
+//     window.open(url, '_blank');
+// }
+            
   render() {
     
     return (
@@ -142,10 +150,18 @@ saveNewBook = () => {
                         authors={authors}
                         thumbnail={thumbnail}
                         description={description}>
-                    <button rel="noreferrer noopener" target="_blank" onClick={this.link}>
-                    View
-                    </button>
-                     <SaveBtn onClick={() => this.saveNewBook(book._id)} />   
+                         <a href={"/books/" + book._id}>
+                       
+                      </a>
+                   
+                    <ViewBtn
+                
+                    >View
+                    </ViewBtn>
+                     <SaveBtn
+                     onClick={() => this.Submitbook()}/>
+                     
+    
                       </BookListItem>
                     );
                   })}

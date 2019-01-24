@@ -3,6 +3,7 @@ import Thumbnail from "../Thumbnail";
 import { Container, Row, Col } from "../Grid";
 import "./style.css";
 import Savebtn from "../SaveBtn";
+import ViewBtn from "../ViewBtn";
 // Exporting both RecipeList and RecipeListItem from this file
 
 // RecipeList renders a bootstrap list item
@@ -28,10 +29,14 @@ export function BookListItem({
             <h3>{title}</h3>
             <h5>{authors}></h5>
             <p>{description}</p>
-            {/* <button rel="noreferrer noopener" target="_blank" onClick={infoLink}>
+            <ViewBtn> 
+            <a href={infoLink} target="_blank" rel="noreferrer noopener">
               View
-            </button> */}
-            <Savebtn className="save"/>
+              </a>
+            </ViewBtn>
+            <Savebtn className="save">
+            Save
+            </Savebtn>
             
          </Col>
         </Row>

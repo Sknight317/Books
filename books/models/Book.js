@@ -14,12 +14,12 @@ const Schema = mongoose.Schema;
   // `link` is required and of type String
   authors: {
     type: String,
-    required: true
+    required: false
   },
   
   description: {
     type: String,
-    required: true
+    required: false
   },
   thumbnail: {
     type: String,
@@ -27,7 +27,7 @@ const Schema = mongoose.Schema;
   },
   link: {
     type: String,
-    required: true
+    required: false
   },
   // Checks if article is saved; is required; automatically defaults to false
   saved: {
