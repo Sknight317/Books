@@ -40,8 +40,7 @@ findbook = () => {
   }).catch((err) => {console.log(err)});
 }
 
-Submitbook = event => {
-event.preventDefault();
+Submitbook = () => {
 alert("saved button clicked!")
 if(this.state.title) {
   API.saveBook({
@@ -60,7 +59,10 @@ if(this.state.title) {
   }  
 };
 
-  
+ClickSave = event => {
+  event.preventDefault(); 
+  this.Submitbook()
+}; 
  
   
     // .then(res => this.loadBooks())
@@ -145,23 +147,14 @@ if(this.state.title) {
                     console.log("description:" +description);
                     return (
                       <BookListItem key={book._id}
-                        title={title}
-                        infoLink={link}
-                        authors={authors}
-                        thumbnail={thumbnail}
-                        description={description}>
-                         <a href={"/books/" + book._id}>
-                       
-                      </a>
+                        title={book.volumeInfo.title}
+                        infoLink={book.volumeInfo.infolink}
+                        authors={book.volumeInfo.authors}
+                        thumbnail={book.volumeInfo.imageLinks.thumbnail}
+                        description={book.volumeInfo.description}>
                    
-                    <ViewBtn
-                
-                    >View
-                    </ViewBtn>
-                     <SaveBtn
-                     onClick={() => this.Submitbook()}/>
-                     
-    
+                          <ViewBtn />
+                          <SaveBtn value={this.book_id} onClick={this.ClickSave}/>
                       </BookListItem>
                     );
                   })}
