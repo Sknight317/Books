@@ -3,13 +3,14 @@ import Nav from "../components/Nav";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import API from "../utils/API";
-import { BookList, BookListItem } from "../components/RecipeList";
+import { BookList, BookListItem } from "../components/List";
 import { Container, Row, Col } from "../components/Grid";
 import Header from "../components/Header";
 import axios from "axios";
-import style from "./style.css"
-import SaveBtn from "../components/SaveBtn"
+import style from "./style.css";
+import Savebtn from "../components/SaveBtn";
 import ViewBtn from "../components/ViewBtn";
+import Thumbnail from "../components/Thumbnail";
 
 class Search extends Component {
   state = {
@@ -36,35 +37,35 @@ findbook = () => {
   }).then((res) => {
   //Set the state of books to res.data.items
   //Use items because items is where the array starts; (can't map over objectS)
-    this.setState({books: res.data.items}, () => {console.log(res.data)})
+  
+  this.setState({books: res.data.items,   
+          
+    }, () => {console.log(res.data)})  
   }).catch((err) => {console.log(err)});
 }
 
-Submitbook = () => {
-alert("saved button clicked!")
-if(this.state.title) {
-  API.saveBook({
-    title: this.state.title,
-    authors: this.state.authors,
-    description: this.state.description,
-    thumbnail: this.state.thumbnail,
-    link: this.state.link,
+Submitbook = id => {
+  //Find the book in the books array that is equal to the book id of the book that was clicked
+const book = this.state.books.find(book => book.id === id);
+alert("saved button clicked!") 
+
+   API.saveBook({
+    id: book.id,
+    title: book.volumeInfo.title,
+    authors: book.volumeInfo.authors,
+    description: book.volumeInfo.description,
+    thumbnail: book.volumeInfo.imageLinks.thumbnail,
+    link: book.volumeInfo.infoLink,
     saved: true
   }) 
-  .then(res => {
-    console.log(res);
-    console.log(res.data);
-  })
-  .catch(err => console.log(err));
-  }  
-};
 
-ClickSave = event => {
-  event.preventDefault(); 
-  this.Submitbook()
-}; 
+  // .then(res => {
+  //   console.log(res);
+  //   console.log(res.data);
+  // })
+  .catch(err => console.log(err)); 
+};
  
-  
     // .then(res => this.loadBooks())
     
 
@@ -145,16 +146,28 @@ ClickSave = event => {
                     console.log("thumbnail:" +thumbnail);
                     const description = book.volumeInfo.description;
                     console.log("description:" +description);
+                    const key = book.id;
+                    console.log(key)
                     return (
-                      <BookListItem key={book._id}
-                        title={book.volumeInfo.title}
-                        infoLink={book.volumeInfo.infolink}
-                        authors={book.volumeInfo.authors}
-                        thumbnail={book.volumeInfo.imageLinks.thumbnail}
-                        description={book.volumeInfo.description}>
-                   
-                          <ViewBtn />
-                          <SaveBtn value={this.book_id} onClick={this.ClickSave}/>
+                      <BookListItem key={key}>
+                       <Container className="contain"> 
+      <Row>
+        <Col>
+            <Thumbnail src={thumbnail} className="thumb-img" />
+           
+            <h3>{title}</h3>
+            <h5>{authors}></h5>
+            <p>{description}</p>
+            <ViewBtn onClick={link}> 
+            View
+            </ViewBtn>
+            <Savebtn onClick={() => this.Submitbook(book.id)} className="save">
+            Save
+            </Savebtn>
+            
+         </Col>
+        </Row>
+       </Container> 
                       </BookListItem>
                     );
                   })}

@@ -6,7 +6,7 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-
+const URI = require("./config/index");
 
 
 // Requiring axios and cheerios
@@ -25,13 +25,28 @@ if (process.env.NODE_ENV === "production") {
 // Add routes, both API and view
 app.use(routes);
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/googlebooks";
-console.log("connection url: " + MONGODB_URI)
-console.log(MONGODB_URI)
+// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/googlebooks";
+// console.log("connection url: " + MONGODB_URI)
+// console.log(MONGODB_URI)
 // mongoose.Promise = Promise;
 // Connect to the Mongo DB
-mongoose.connect(MONGODB_URI , { useNewUrlParser: true });
+// mongoose.connect(MONGODB_URI , { useNewUrlParser: true });
 
+mongoose.connect(process.env.MONGODB_URI || URI, { useNewUrlParser: true });
+
+// When successfully connected
+mongoose.connection.on('connected', () => {
+	console.log('Established Mongoose Default Connection');
+});
+
+// When connection throws an error
+mongoose.connection.on('error', err => {
+	console.log('Mongoose Default Connection Error : ' + err);
+});
+
+// app.get('/', (req, res) => {
+// 	res.send('Hello');
+// });
 // Define API routes here
 //Route to return all saved books as JSON
 // app.get("/api/books", function(req, res) {
@@ -75,9 +90,9 @@ mongoose.connect(MONGODB_URI , { useNewUrlParser: true });
   
 // Send every other request to the React app
 // Define any API routes before this runs
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "./client/build/index.html"));
+// });
 
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);

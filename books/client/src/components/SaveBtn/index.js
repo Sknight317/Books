@@ -5,7 +5,7 @@ import "./style.css";
 // That way we don't have to define them all individually
 function SaveBtn(props) {
   return (
-    <button className="delete-btn" {...props} tabIndex="0">
+    <button onClick={props.Submitbook} className="delete-btn" {...props} tabIndex="0">
       Save
     </button>
   );
