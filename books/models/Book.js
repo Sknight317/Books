@@ -14,20 +14,20 @@ const Schema = mongoose.Schema;
   // `link` is required and of type String
   authors: {
     type: String,
-    required: false
+    required: true
   },
   
   description: {
     type: String,
-    required: false
+    required: true
   },
   thumbnail: {
     type: String,
-    required: false
+    required: true
   },
   link: {
     type: String,
-    required: false
+    required: true
   },
   // Checks if article is saved; is required; automatically defaults to false
   saved: {
@@ -35,9 +35,10 @@ const Schema = mongoose.Schema;
     required: true,
     default: false
   },
-  saved: {
+  id: {
     type: String,
     required: true,
+    unique: true
   },
 });
 

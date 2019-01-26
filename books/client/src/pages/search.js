@@ -44,12 +44,15 @@ findbook = () => {
   }).catch((err) => {console.log(err)});
 }
 
-Submitbook = id => {
+Submitbook = (id, event) => {
+event.preventDefault()
   //Find the book in the books array that is equal to the book id of the book that was clicked
 const book = this.state.books.find(book => book.id === id);
 alert("saved button clicked!") 
-
-   API.saveBook({
+axios({
+  method: 'post',
+  url: '/api/books',
+  data: {
     id: book.id,
     title: book.volumeInfo.title,
     authors: book.volumeInfo.authors,
@@ -57,12 +60,13 @@ alert("saved button clicked!")
     thumbnail: book.volumeInfo.imageLinks.thumbnail,
     link: book.volumeInfo.infoLink,
     saved: true
-  }) 
-
-  // .then(res => {
-  //   console.log(res);
-  //   console.log(res.data);
-  // })
+  }
+})
+  .then(res => {
+    console.log(res.data)
+    console.log("Book posted");
+   
+  })
   .catch(err => console.log(err)); 
 };
  
@@ -161,7 +165,7 @@ alert("saved button clicked!")
             <ViewBtn onClick={link}> 
             View
             </ViewBtn>
-            <Savebtn onClick={() => this.Submitbook(book.id)} className="save">
+            <Savebtn onClick={(event) => this.Submitbook(book.id,event)} className="save">
             Save
             </Savebtn>
             

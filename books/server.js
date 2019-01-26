@@ -5,10 +5,22 @@ const routes = require("./routes");
 const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3001;
-
+// require('./models');
 const URI = require("./config/index");
 
 
+
+mongoose.connect(process.env.MONGODB_URI || URI, { useNewUrlParser: true });
+
+// When successfully connected
+mongoose.connection.on('connected', () => {
+	console.log('Established Mongoose Default Connection');
+});
+
+// When connection throws an error
+mongoose.connection.on('error', err => {
+	console.log('Mongoose Default Connection Error : ' + err);
+});
 // Requiring axios and cheerios
 // var axios = require("axios");
 // var cheerio = require("cheerio");
@@ -23,8 +35,8 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 // Add routes, both API and view
-app.use(routes);
 
+app.use(routes);
 // var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/googlebooks";
 // console.log("connection url: " + MONGODB_URI)
 // console.log(MONGODB_URI)
@@ -32,17 +44,6 @@ app.use(routes);
 // Connect to the Mongo DB
 // mongoose.connect(MONGODB_URI , { useNewUrlParser: true });
 
-mongoose.connect(process.env.MONGODB_URI || URI, { useNewUrlParser: true });
-
-// When successfully connected
-mongoose.connection.on('connected', () => {
-	console.log('Established Mongoose Default Connection');
-});
-
-// When connection throws an error
-mongoose.connection.on('error', err => {
-	console.log('Mongoose Default Connection Error : ' + err);
-});
 
 // app.get('/', (req, res) => {
 // 	res.send('Hello');
