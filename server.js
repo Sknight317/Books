@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 // mongoose.plugin(schema => { schema.options.usePushEach = true });
-const routes = require("./routes");
+const book = require("./routes/api/books");
 const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === "production") {
 }
 // Add routes, both API and view
 
-app.use(routes);
+app.use("/api/books", book);
 // var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/googlebooks";
 // console.log("connection url: " + MONGODB_URI)
 // console.log(MONGODB_URI)
