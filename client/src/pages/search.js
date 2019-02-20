@@ -98,7 +98,7 @@ axios({
   render() {
     
     return (
-      <div>
+      <Container>
         <Nav />
         <Header />
         
@@ -120,7 +120,7 @@ axios({
                       <Button
                         onClick={this.handleFormSubmit}
                         type="success"
-                        className="input-lg"
+                        className="search"
                       >
                         Search
                       </Button>
@@ -182,7 +182,7 @@ axios({
             </Col>
           </Row>
         </Container>
-      </div>
+      </Container>
     );
   }
 }

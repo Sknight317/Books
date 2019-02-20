@@ -16,3 +16,7 @@ ul {
 li{
   padding: 0px 10px;
 }
+.number1 {
+  font-weight: bold;
+  font-size: 2vw;
+}

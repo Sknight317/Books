@@ -2,7 +2,9 @@
 li.list-group-item {
     background-color: rgb(231, 230, 230);
     margin: 25px 0;
-    
+    border-radius: 8px;
+    padding: 20px;
+    font-family: 'Comfortaa', cursive;
 }
 .list {
     display: block;
@@ -10,8 +12,9 @@ li.list-group-item {
     margin: 0 auto;
 }
 
+
 h3 {
-    font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+    font-family: 'Comfortaa', cursive;
 }  
 .thumb-img {
     float: left;
@@ -20,7 +23,7 @@ h3 {
     height: 200px;
   }
   li p {
-    font: 200 14px/1.5 Georgia, Times New Roman, serif;
+    font-family: 'Comfortaa', cursive;
   }
   
   li {
